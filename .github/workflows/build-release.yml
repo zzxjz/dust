@@ -22,15 +22,6 @@ jobs:
             artifact: Windows
             artifact-extension: .exe
             target: x86_64-pc-windows-msvc
-          - os: ubuntu-latest
-            artifact: Linux
-            target: x86_64-unknown-linux-gnu
-          - os: macos-latest
-            artifact: macOS-x86_64
-            target: x86_64-apple-darwin
-          - os: macos-latest
-            artifact: macOS-aarch64
-            target: aarch64-apple-darwin
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -58,12 +49,6 @@ jobs:
       with:
         path: target/
         key: ${{ matrix.target }}-release-${{ steps.toolchain.outputs.cachekey }}
-
-    - name: Install ALSA
-      if: ${{ matrix.os == 'ubuntu-latest' }}
-      run: |
-        sudo apt-get update
-        sudo apt-get install libasound2-dev
 
     - name: Update dependencies
       run: cargo update
